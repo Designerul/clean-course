@@ -3,14 +3,22 @@
     // No aplicando el principio de responsabilidad única
     type Gender = 'M' | 'F';
 
-    interface PersonProperties {
+    interface PersonProps {
         name: string;
         gender: Gender;
         birthdate: Date;
     }
 
     class Person {
-        constructor({ name, gender, birthdate }) {}
+        public name: string;
+        public gender: Gender;
+        public birthdate: Date;
+
+        constructor({ name, gender, birthdate }: PersonProps) {
+            this.name = name;
+            this.gender = gender;
+            this.birthdate = birthdate;
+        }
     }
 
     class User extends Person {
