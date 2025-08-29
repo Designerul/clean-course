@@ -21,18 +21,30 @@
         }
     }
 
-    class User extends Person {
-        public lastAccess: Date;
+    interface UserProps {
+        birthdate: Date;
+        email: string;
+        gender: Gender;
+        name: string;
+        role: string;
+    }
 
-        constructor(
-            public email: string,
-            public role: string,
-            name: string,
-            gender: Gender,
-            birthdate: Date
-        ) {
-            super(name, gender, birthdate);
+    class User extends Person {
+        public email: string;
+        public lastAccess: Date;
+        public role: string;
+
+        constructor({
+            birthdate,
+            email,
+            gender,
+            name,
+            role,
+        } : UserProps) {
+            super({name, gender, birthdate});
+            this.email = email;
             this.lastAccess = new Date();
+            this.role = role;
         }
 
         checkCredentials() {
@@ -40,30 +52,44 @@
         }
     }
 
+    interface UserSettingsProps {
+        birthdate: Date;
+        email: string;
+        gender: Gender;
+        lastOpenFolder: string;
+        name: string;
+        role: string;
+        workingDirectory: string;
+    }
+
     class UserSettings extends User {
-        constructor(
-            public workingDirectory: string,
-            public lastOpenFolder: string,
-            email: string,
-            role: string,
-            name: string,
-            gender: Gender,
-            birthdate: Date
-        ) {
-            super(email, role, name, gender, birthdate);
+        public workingDirectory: string;
+        public lastOpenFolder: string;
+
+        constructor({
+            workingDirectory,
+            lastOpenFolder,
+            email,
+            role,
+            name,
+            gender,
+            birthdate
+        }: UserSettingsProps) {
+            super({email, role, name, gender, birthdate});
+            this.workingDirectory = workingDirectory;
+            this.lastOpenFolder = lastOpenFolder;
         }
     }
 
-    const userSettings = new UserSettings(
-        '/home/fernando',
-        '/home/fernando/projects',
-        'fernando@google.com',
-        'admin',
-        'Fernando',
-        'M',
-        new Date('1985-10-21')
-    );
+    const userSettings = new UserSettings({
+        workingDirectory: '/home/fernando',
+        lastOpenFolder: '/home/fernando/projects',
+        email: 'fernando@google.com',
+        role: 'admin',
+        name: 'Fernando',
+        gender: 'M',
+        birthdate: new Date('1985-10-21')
+    });
 
     console.log({ userSettings});
-
 })();
